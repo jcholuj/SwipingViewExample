@@ -121,18 +121,22 @@ class SwipingView: SwipeableView {
         button.addTarget(self, action: #selector(favButtonTapped(_:)), for: .touchUpInside)
     }
     
-    @objc private func buttonTapped(_ button: UIButton) {
-        let alert = UIAlertController(title: "Author", message: "App created by Jędrzej Chołuj", preferredStyle: .alert)
-        let doneAction = UIAlertAction(title: "Done", style: .default, handler: nil)
-        alert.addAction(doneAction)
-        UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+    @objc private func buttonTapped(_ sender: UIButton) {
+        sender.animateButton(duration: 0.1, scale: 0.9) { (_) in
+            let alert = UIAlertController(title: "Author", message: "App created by Jędrzej Chołuj", preferredStyle: .alert)
+            let doneAction = UIAlertAction(title: "Done", style: .default, handler: nil)
+            alert.addAction(doneAction)
+            UIApplication.shared.keyWindow?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
     }
     
     @objc private func favButtonTapped(_ sender: UIButton) {
-        let color = sender.tintColor
-        color == UIColor.lightGray ?
-            sender.setSystemSymbolAsButtonImage(color: .purple, name: "star.circle.fill", size: 35) :
-            sender.setSystemSymbolAsButtonImage(color: .lightGray, name: "star.circle", size: 35)
+        sender.animateButton(duration: 0.1, scale: 0.9) { (_) in
+            let color = sender.tintColor
+            color == UIColor.lightGray ?
+                sender.setSystemSymbolAsButtonImage(color: .purple, name: "star.circle.fill", size: 35) :
+                sender.setSystemSymbolAsButtonImage(color: .lightGray, name: "star.circle", size: 35)
+        }
     }
 
 }
