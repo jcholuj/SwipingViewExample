@@ -11,13 +11,22 @@ import UIKit
 class ViewController: NavigationViewController {
     
     var dataArray = [DataModel(title: "CARD 1"), DataModel(title: "CARD 2"), DataModel(title: "CARD 3"), DataModel(title: "CARD 4"), DataModel(title: "CARD 5"), DataModel(title: "CARD 6")]
+    
     var swipingContainer: SwipingContainerView!
     var addButton: UIButton!
     var emptyViewLabel: UILabel!
+    
+    override func loadView() {
+        super.loadView()
+        
+        setupSwipingContainer()
+        setupEmptyViewLabel()
+        setupAddButton()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureSwipingContainer()
+        
         configureAddButton()
         configureEmptyViewLabel()
         setupNavigationBar()
@@ -56,49 +65,88 @@ class ViewController: NavigationViewController {
         emptyViewLabel.isHidden = true
     }
     
-    func configureSwipingContainer() {
-        swipingContainer = SwipingContainerView()
-        view.addSubview(swipingContainer)
+    func setupSwipingContainer() {
+        let container = SwipingContainerView()
+        self.view.addSubview(container)
+        container.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            swipingContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            swipingContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -115),
-            swipingContainer.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9),
-            swipingContainer.heightAnchor.constraint(equalToConstant: view.frame.height * 0.72)
+            container.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            container.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -115),
+            container.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9),
+            container.heightAnchor.constraint(equalToConstant: view.frame.height * 0.72)
         ])
-        swipingContainer.translatesAutoresizingMaskIntoConstraints = false
+        self.swipingContainer = container
+    }
+    
+//    func configureSwipingContainer() {
+//        swipingContainer = SwipingContainerView()
+//        view.addSubview(swipingContainer)
+//        NSLayoutConstraint.activate([
+//            swipingContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            swipingContainer.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -115),
+//            swipingContainer.widthAnchor.constraint(equalToConstant: view.frame.width * 0.9),
+//            swipingContainer.heightAnchor.constraint(equalToConstant: view.frame.height * 0.72)
+//        ])
+//        swipingContainer.translatesAutoresizingMaskIntoConstraints = false
+//    }
+    
+    func setupEmptyViewLabel() {
+        let label = UILabel()
+        self.view.insertSubview(label, aboveSubview: self.swipingContainer)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            label.centerXAnchor.constraint(equalTo: self.swipingContainer.centerXAnchor),
+            label.centerYAnchor.constraint(equalTo: self.swipingContainer.centerYAnchor),
+            label.widthAnchor.constraint(equalTo: self.swipingContainer.widthAnchor),
+            label.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        self.emptyViewLabel = label
     }
     
     func configureEmptyViewLabel() {
-        emptyViewLabel = UILabel()
-        swipingContainer.insertSubview(emptyViewLabel, aboveSubview: swipingContainer)
+//        emptyViewLabel = UILabel()
+//        swipingContainer.insertSubview(emptyViewLabel, aboveSubview: swipingContainer)
         emptyViewLabel.isHidden = true
-        NSLayoutConstraint.activate([
-            emptyViewLabel.centerXAnchor.constraint(equalTo: swipingContainer.centerXAnchor),
-            emptyViewLabel.centerYAnchor.constraint(equalTo: swipingContainer.centerYAnchor),
-            emptyViewLabel.widthAnchor.constraint(equalTo: swipingContainer.widthAnchor),
-            emptyViewLabel.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        emptyViewLabel.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            emptyViewLabel.centerXAnchor.constraint(equalTo: swipingContainer.centerXAnchor),
+//            emptyViewLabel.centerYAnchor.constraint(equalTo: swipingContainer.centerYAnchor),
+//            emptyViewLabel.widthAnchor.constraint(equalTo: swipingContainer.widthAnchor),
+//            emptyViewLabel.heightAnchor.constraint(equalToConstant: 50)
+//        ])
+//        emptyViewLabel.translatesAutoresizingMaskIntoConstraints = false
         emptyViewLabel.textAlignment = .center
         emptyViewLabel.text = "There's nothing to display.."
         emptyViewLabel.backgroundColor = .clear
         emptyViewLabel.textColor = .lightGray
     }
+    
+    func setupAddButton() {
+        let button = UIButton()
+        self.view.addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            button.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+            button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            button.heightAnchor.constraint(equalToConstant: 50),
+            button.widthAnchor.constraint(equalToConstant: 50)
+        ])
+        self.addButton = button
+    }
 
     func configureAddButton() {
-        addButton = UIButton()
-        view.addSubview(addButton)
+//        addButton = UIButton()
+//        view.addSubview(addButton)
         addButton.configureRoundedButton(cornerRadius: 25, color: .purple, borderWidth: 0, borderColor: nil)
         let configuration = UIImage.SymbolConfiguration(pointSize: 20, weight: .bold)
         addButton.setImage(UIImage(systemName: "plus", withConfiguration: configuration), for: .normal)
         addButton.tintColor = .white
-        NSLayoutConstraint.activate([
-            addButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
-            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-            addButton.heightAnchor.constraint(equalToConstant: 50),
-            addButton.widthAnchor.constraint(equalToConstant: 50)
-        ])
-        addButton.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            addButton.rightAnchor.constraint(equalTo: view.rightAnchor, constant: -20),
+//            addButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+//            addButton.heightAnchor.constraint(equalToConstant: 50),
+//            addButton.widthAnchor.constraint(equalToConstant: 50)
+//        ])
+//        addButton.translatesAutoresizingMaskIntoConstraints = false
         
         addButton.addTarget(self, action: #selector(addButtonPressed(_:)), for: .touchUpInside)
     }

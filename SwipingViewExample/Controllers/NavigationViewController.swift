@@ -11,22 +11,29 @@ import UIKit
 class NavigationViewController: UIViewController {
     
     var navigationBar: UINavigationBar!
+    
+    override func loadView() {
+        super.loadView()
+        
+        setupNavigationBar()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupNavigationBar()
+        
         configureNavigationBar()
     }
     
     func setupNavigationBar() {
-        navigationBar = UINavigationBar()
-        self.view.addSubview(navigationBar)
+        let navBar = UINavigationBar()
+        self.view.addSubview(navBar)
+        navBar.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            navigationBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            navigationBar.leftAnchor.constraint(equalTo: view.leftAnchor),
-            navigationBar.rightAnchor.constraint(equalTo: view.rightAnchor)
+            navBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            navBar.leftAnchor.constraint(equalTo: view.leftAnchor),
+            navBar.rightAnchor.constraint(equalTo: view.rightAnchor)
         ])
-        navigationBar.translatesAutoresizingMaskIntoConstraints = false
+        self.navigationBar = navBar
     }
     
     func configureNavigationBar() {
