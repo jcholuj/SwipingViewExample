@@ -61,14 +61,16 @@ class SwipingContainerView: UIView {
     func deleteFirstView() {
         guard let dataSource = dataSource else { return }
         numberOfViewsToPresent = dataSource.numberOfViewsToPresent()
-        visibleViews[0].removeFromSuperview()
-        visibleViews.remove(at: 0)
-        moveViews()
-        if numberOfViewsLeftToPresent > 0 {
-            addViewToHierarchy(index: visibleViews.count, view: dataSource.viewToPresent(viewAtIndex: numberOfViewsToPresent - numberOfViewsLeftToPresent))
-        }
-        if visibleViews.count == 0 && numberOfViewsLeftToPresent == 0 {
-            dataSource.emptyView()
+        if !visibleViews.isEmpty {
+            visibleViews[0].removeFromSuperview()
+            visibleViews.remove(at: 0)
+            moveViews()
+            if numberOfViewsLeftToPresent > 0 {
+                addViewToHierarchy(index: visibleViews.count, view: dataSource.viewToPresent(viewAtIndex: numberOfViewsToPresent - numberOfViewsLeftToPresent))
+            }
+            if visibleViews.count == 0 && numberOfViewsLeftToPresent == 0 {
+                dataSource.emptyView()
+            }
         }
     }
     
